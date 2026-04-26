@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lunaria Market - Fashion & Baju Tidur Wanita</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo">🌙</span>
+        <div>
+          <h1>Lunaria Market</h1>
+          <p>Marketplace Baju Tidur & Fashion Wanita</p>
+        </div>
+      </div>
+      <div class="search-area">
+        <input id="searchInput" type="search" placeholder="Cari produk, toko, atau kategori..." />
+        <select id="sortSelect">
+          <option value="popular">Urutkan: Terpopuler</option>
+          <option value="price-asc">Harga Terendah</option>
+          <option value="price-desc">Harga Tertinggi</option>
+          <option value="rating">Rating Tertinggi</option>
+        </select>
+      </div>
+      <button id="cartToggle" class="cart-btn">🛒 Keranjang (<span id="cartCount">0</span>)</button>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <h2>Belanja Nyaman untuk Istirahat dan Gaya Harian</h2>
+          <p>
+            Temukan koleksi baju tidur wanita, daster premium, piyama satin, dan fashion kekinian
+            dari berbagai penjual terpercaya.
+          </p>
+          <div class="hero-tags">
+            <span>✅ COD & Transfer</span>
+            <span>🚚 Pengiriman Seluruh Indonesia</span>
+            <span>💬 Chat Penjual Langsung</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="market-layout">
+        <aside class="sidebar">
+          <h3>Kategori</h3>
+          <div class="filters" id="categoryFilters"></div>
+
+          <h3>Rentang Harga</h3>
+          <label>Min: Rp <span id="minVal">0</span></label>
+          <input type="range" id="minPrice" min="0" max="1000000" step="10000" value="0" />
+          <label>Maks: Rp <span id="maxVal">1000000</span></label>
+          <input type="range" id="maxPrice" min="0" max="1000000" step="10000" value="1000000" />
+
+          <h3>Rating Minimal</h3>
+          <input type="range" id="ratingFilter" min="0" max="5" step="0.5" value="0" />
+          <p>⭐ <span id="ratingVal">0</span> ke atas</p>
+        </aside>
+
+        <section>
+          <div class="section-head">
+            <h3>Produk Marketplace</h3>
+            <span id="resultInfo"></span>
+          </div>
+          <div id="productGrid" class="product-grid"></div>
+        </section>
+      </section>
+    </main>
+
+    <aside id="cartDrawer" class="cart-drawer hidden">
+      <div class="cart-header">
+        <h3>Keranjang Belanja</h3>
+        <button id="closeCart">✖</button>
+      </div>
+      <div id="cartItems" class="cart-items"></div>
+      <div class="cart-footer">
+        <p>Subtotal: <strong id="subtotal">Rp 0</strong></p>
+        <button id="checkoutBtn" class="checkout-btn">Checkout Sekarang</button>
+      </div>
+    </aside>
+
+    <dialog id="checkoutDialog">
+      <h3>Checkout</h3>
+      <form id="checkoutForm" method="dialog">
+        <label>Nama Penerima
+          <input required type="text" name="name" />
+        </label>
+        <label>Alamat Lengkap
+          <textarea required name="address"></textarea>
+        </label>
+        <label>Metode Pembayaran
+          <select required name="payment">
+            <option value="">Pilih Metode</option>
+            <option>Transfer Bank</option>
+            <option>COD</option>
+            <option>E-Wallet</option>
+          </select>
+        </label>
+        <menu>
+          <button value="cancel">Batal</button>
+          <button value="confirm">Konfirmasi Pesanan</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>
