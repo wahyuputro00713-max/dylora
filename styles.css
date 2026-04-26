@@ -32,7 +32,13 @@ body {
 .brand { display: flex; align-items: center; gap: .75rem; }
 .brand h1 { margin: 0; font-size: 1.2rem; }
 .brand p { margin: .2rem 0 0; font-size: .8rem; color: #7f6576; }
-.logo { font-size: 1.8rem; }
+.logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 1px solid var(--border);
+}
 
 .search-area {
   display: flex;
