@@ -34,6 +34,7 @@
           <option value="rating">Rating Tertinggi</option>
         </select>
       </div>
+      <button id="adminToggle" class="admin-btn">🔐 Admin</button>
       <button id="cartToggle" class="cart-btn">🛒 Keranjang (<span id="cartCount">0</span>)</button>
     </header>
 
@@ -113,6 +114,34 @@
           <button value="confirm">Konfirmasi Pesanan</button>
         </menu>
       </form>
+    </dialog>
+
+    <dialog id="adminLoginDialog">
+      <h3>Login Admin</h3>
+      <form id="adminLoginForm" method="dialog">
+        <p class="admin-note">
+          Demo akun admin: <strong>admin@dylora.id</strong> / <strong>Admin123!</strong>
+        </p>
+        <label>Email Admin
+          <input required type="email" name="email" />
+        </label>
+        <label>Password
+          <input required type="password" name="password" />
+        </label>
+        <menu>
+          <button value="cancel">Batal</button>
+          <button value="login">Login</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <dialog id="adminPanelDialog">
+      <div class="admin-panel-header">
+        <h3>Panel Admin - Konfirmasi Pembelian Masuk</h3>
+        <button id="adminLogoutBtn" class="admin-logout">Logout</button>
+      </div>
+      <div id="adminOrderList" class="admin-order-list"></div>
+      <button id="closeAdminPanel" class="close-admin">Tutup</button>
     </dialog>
 
     <script src="app.js"></script>
