@@ -17,6 +17,14 @@ const state = {
   maxPrice: 1000000,
   rating: 0,
   cart: JSON.parse(localStorage.getItem("cart") ?? "[]"),
+  orders: JSON.parse(localStorage.getItem("orders") ?? "[]"),
+  adminSession: localStorage.getItem("adminSession") === "active",
+};
+
+const adminAccount = {
+  email: "admin@dylora.id",
+  password: "Admin123!",
+  role: "Marketplace Admin",
 };
 
 const byId = (id) => document.getElementById(id);
@@ -118,6 +126,73 @@ function syncCart() {
   renderCart();
 }
 
+function syncOrders() {
+  localStorage.setItem("orders", JSON.stringify(state.orders));
+}
+
+function renderAdminOrders() {
+  const adminList = byId("adminOrderList");
+  if (!adminList) return;
+  if (!state.orders.length) {
+    adminList.innerHTML = "<p>Belum ada pembelian masuk.</p>";
+    return;
+  }
+
+  adminList.innerHTML = state.orders
+    .slice()
+    .reverse()
+    .map(
+      (order) => `
+        <article class="admin-order-item">
+          <div class="admin-order-head">
+            <strong>${order.code}</strong>
+            <span class="order-status ${order.status}">${order.statusLabel}</span>
+          </div>
+          <p><strong>Penerima:</strong> ${order.customerName}</p>
+          <p><strong>Alamat:</strong> ${order.address}</p>
+          <p><strong>Pembayaran:</strong> ${order.payment}</p>
+          <p><strong>Total:</strong> Rp ${format(order.total)}</p>
+          <p><strong>Item:</strong> ${order.items.map((item) => `${item.name} (${item.qty})`).join(", ")}</p>
+          ${
+            order.status === "pending"
+              ? `<div class="admin-order-actions">
+                  <button data-confirm="${order.code}" class="admin-confirm">Konfirmasi</button>
+                  <button data-reject="${order.code}" class="admin-reject">Tolak</button>
+                </div>`
+              : ""
+          }
+        </article>
+      `
+    )
+    .join("");
+
+  document.querySelectorAll("[data-confirm]").forEach((btn) => {
+    btn.addEventListener("click", () => updateOrderStatus(btn.dataset.confirm, "confirmed"));
+  });
+
+  document.querySelectorAll("[data-reject]").forEach((btn) => {
+    btn.addEventListener("click", () => updateOrderStatus(btn.dataset.reject, "rejected"));
+  });
+}
+
+function updateOrderStatus(orderCode, status) {
+  const order = state.orders.find((item) => item.code === orderCode);
+  if (!order) return;
+  order.status = status;
+  order.statusLabel = status === "confirmed" ? "Terkonfirmasi" : "Ditolak";
+  syncOrders();
+  renderAdminOrders();
+}
+
+function openAdminPanel() {
+  if (!state.adminSession) {
+    byId("adminLoginDialog").showModal();
+    return;
+  }
+  renderAdminOrders();
+  byId("adminPanelDialog").showModal();
+}
+
 function initEvents() {
   byId("searchInput").addEventListener("input", (e) => {
     state.query = e.target.value.toLowerCase();
@@ -163,11 +238,52 @@ function initEvents() {
 
   byId("checkoutForm").addEventListener("submit", (e) => {
     e.preventDefault();
-    alert("Pesanan berhasil dibuat! Penjual akan segera memproses pesanan Anda.");
+    const formData = new FormData(e.target);
+    const order = {
+      code: `INV-${Date.now()}`,
+      customerName: String(formData.get("name") ?? ""),
+      address: String(formData.get("address") ?? ""),
+      payment: String(formData.get("payment") ?? ""),
+      items: state.cart.map((item) => ({ id: item.id, name: item.name, qty: item.qty, price: item.price })),
+      total: state.cart.reduce((n, item) => n + item.qty * item.price, 0),
+      status: "pending",
+      statusLabel: "Menunggu Konfirmasi Admin",
+    };
+    state.orders.push(order);
+    syncOrders();
+    alert("Pesanan berhasil dibuat! Pesanan Anda menunggu konfirmasi admin marketplace.");
     state.cart = [];
     syncCart();
     dialog.close();
+    e.target.reset();
   });
+
+  byId("adminToggle").addEventListener("click", openAdminPanel);
+
+  byId("adminLoginForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const email = String(formData.get("email") ?? "").trim().toLowerCase();
+    const password = String(formData.get("password") ?? "");
+    if (email === adminAccount.email && password === adminAccount.password) {
+      state.adminSession = true;
+      localStorage.setItem("adminSession", "active");
+      byId("adminLoginDialog").close();
+      e.target.reset();
+      openAdminPanel();
+      return;
+    }
+    alert("Email atau password admin salah.");
+  });
+
+  byId("adminLogoutBtn").addEventListener("click", () => {
+    state.adminSession = false;
+    localStorage.removeItem("adminSession");
+    byId("adminPanelDialog").close();
+    alert("Admin berhasil logout.");
+  });
+
+  byId("closeAdminPanel").addEventListener("click", () => byId("adminPanelDialog").close());
 }
 
 setupFilters();
