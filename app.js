@@ -1,4 +1,4 @@
-const products = [
+const defaultProducts = [
   { id: 1, name: "Piyama Satin Rose", category: "Baju Tidur", price: 179000, rating: 4.8, sold: 240, store: "Luna Sleepwear", emoji: "🩷" },
   { id: 2, name: "Daster Katun Premium", category: "Baju Tidur", price: 129000, rating: 4.6, sold: 512, store: "Nyaman House", emoji: "🌸" },
   { id: 3, name: "Set Kimono Nightwear", category: "Baju Tidur", price: 219000, rating: 4.9, sold: 143, store: "Moonlight Closet", emoji: "🎀" },
@@ -19,35 +19,43 @@ const state = {
   cart: JSON.parse(localStorage.getItem("cart") ?? "[]"),
   orders: JSON.parse(localStorage.getItem("orders") ?? "[]"),
   adminSession: localStorage.getItem("adminSession") === "active",
+  products: JSON.parse(localStorage.getItem("products") ?? JSON.stringify(defaultProducts)),
+  categoryFilterBound: false,
 };
 
 const adminAccount = {
   email: "admin@dylora.id",
   password: "Admin123!",
-  role: "Marketplace Admin",
 };
 
 const byId = (id) => document.getElementById(id);
 const format = (val) => new Intl.NumberFormat("id-ID").format(val);
 
 function setupFilters() {
-  const categories = [...new Set(products.map((p) => p.category))];
+  const categories = [...new Set(state.products.map((p) => p.category))];
   byId("categoryFilters").innerHTML = categories
     .map(
       (cat) => `<label><input type="checkbox" value="${cat}" /> ${cat}</label>`
     )
     .join("");
 
-  byId("categoryFilters").addEventListener("change", (e) => {
-    const { value, checked } = e.target;
-    if (checked) state.categories.add(value);
-    else state.categories.delete(value);
-    renderProducts();
+  if (!state.categoryFilterBound) {
+    byId("categoryFilters").addEventListener("change", (e) => {
+      const { value, checked } = e.target;
+      if (checked) state.categories.add(value);
+      else state.categories.delete(value);
+      renderProducts();
+    });
+    state.categoryFilterBound = true;
+  }
+
+  state.categories.forEach((cat) => {
+    if (!categories.includes(cat)) state.categories.delete(cat);
   });
 }
 
 function getFilteredProducts() {
-  return products
+  return state.products
     .filter((p) => !state.query || [p.name, p.store, p.category].join(" ").toLowerCase().includes(state.query))
     .filter((p) => state.categories.size === 0 || state.categories.has(p.category))
     .filter((p) => p.price >= state.minPrice && p.price <= state.maxPrice)
@@ -81,10 +89,10 @@ function renderProducts() {
   document.querySelectorAll("[data-add]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const id = Number(btn.dataset.add);
-      const exists = state.cart.find((item) => item.id === id);
+        const exists = state.cart.find((item) => item.id === id);
       if (exists) exists.qty += 1;
       else {
-        const prod = products.find((p) => p.id === id);
+        const prod = state.products.find((p) => p.id === id);
         state.cart.push({ ...prod, qty: 1 });
       }
       syncCart();
@@ -128,6 +136,10 @@ function syncCart() {
 
 function syncOrders() {
   localStorage.setItem("orders", JSON.stringify(state.orders));
+}
+
+function syncProducts() {
+  localStorage.setItem("products", JSON.stringify(state.products));
 }
 
 function renderAdminOrders() {
@@ -189,8 +201,81 @@ function openAdminPanel() {
     byId("adminLoginDialog").showModal();
     return;
   }
+  byId("showOrderTab").classList.add("active");
+  byId("showProductTab").classList.remove("active");
+  byId("adminOrderSection").classList.remove("hidden-admin");
+  byId("adminProductSection").classList.add("hidden-admin");
   renderAdminOrders();
+  renderAdminProducts();
   byId("adminPanelDialog").showModal();
+}
+
+function renderAdminProducts() {
+  const list = byId("adminProductList");
+  if (!list) return;
+
+  list.innerHTML = state.products
+    .slice()
+    .sort((a, b) => a.id - b.id)
+    .map(
+      (product) => `
+        <article class="admin-product-item">
+          <div>
+            <strong>${product.name}</strong>
+            <p>${product.category} • ${product.store}</p>
+            <p>⭐ ${product.rating} • Terjual ${product.sold}</p>
+          </div>
+          <div class="admin-product-actions">
+            <label>Harga
+              <input type="number" min="1000" step="1000" value="${product.price}" data-product-price="${product.id}" />
+            </label>
+            <label>Rating
+              <input type="number" min="1" max="5" step="0.1" value="${product.rating}" data-product-rating="${product.id}" />
+            </label>
+            <button data-product-save="${product.id}" class="admin-confirm">Simpan Perubahan</button>
+            <button data-product-delete="${product.id}" class="admin-reject">Hapus Produk</button>
+          </div>
+        </article>
+      `
+    )
+    .join("");
+
+  document.querySelectorAll("[data-product-save]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = Number(btn.dataset.productSave);
+      const product = state.products.find((item) => item.id === id);
+      if (!product) return;
+
+      const newPrice = Number(document.querySelector(`[data-product-price="${id}"]`)?.value ?? product.price);
+      const newRating = Number(document.querySelector(`[data-product-rating="${id}"]`)?.value ?? product.rating);
+      if (newPrice < 1000 || newRating < 1 || newRating > 5) {
+        alert("Harga minimal Rp1.000 dan rating harus 1-5.");
+        return;
+      }
+
+      product.price = newPrice;
+      product.rating = Number(newRating.toFixed(1));
+      syncProducts();
+      setupFilters();
+      renderProducts();
+      renderAdminProducts();
+      alert("Produk berhasil diperbarui.");
+    });
+  });
+
+  document.querySelectorAll("[data-product-delete]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = Number(btn.dataset.productDelete);
+      state.products = state.products.filter((item) => item.id !== id);
+      state.cart = state.cart.filter((item) => item.id !== id);
+      syncProducts();
+      syncCart();
+      setupFilters();
+      renderProducts();
+      renderAdminProducts();
+      alert("Produk berhasil dihapus.");
+    });
+  });
 }
 
 function initEvents() {
@@ -284,6 +369,50 @@ function initEvents() {
   });
 
   byId("closeAdminPanel").addEventListener("click", () => byId("adminPanelDialog").close());
+
+  byId("showOrderTab").addEventListener("click", () => {
+    byId("showOrderTab").classList.add("active");
+    byId("showProductTab").classList.remove("active");
+    byId("adminOrderSection").classList.remove("hidden-admin");
+    byId("adminProductSection").classList.add("hidden-admin");
+  });
+
+  byId("showProductTab").addEventListener("click", () => {
+    byId("showProductTab").classList.add("active");
+    byId("showOrderTab").classList.remove("active");
+    byId("adminProductSection").classList.remove("hidden-admin");
+    byId("adminOrderSection").classList.add("hidden-admin");
+  });
+
+  byId("adminProductForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const newProduct = {
+      id: state.products.reduce((maxId, item) => Math.max(maxId, item.id), 0) + 1,
+      name: String(formData.get("name") ?? "").trim(),
+      category: String(formData.get("category") ?? ""),
+      store: String(formData.get("store") ?? "").trim(),
+      price: Number(formData.get("price") ?? 0),
+      rating: Number(formData.get("rating") ?? 0),
+      sold: 0,
+      emoji: String(formData.get("emoji") ?? "").trim() || "🛍️",
+    };
+
+    if (!newProduct.name || !newProduct.category || !newProduct.store) {
+      return alert("Nama produk, kategori, dan toko wajib diisi.");
+    }
+    if (newProduct.price < 1000 || newProduct.rating < 1 || newProduct.rating > 5) {
+      return alert("Harga minimal Rp1.000 dan rating harus 1-5.");
+    }
+
+    state.products.push(newProduct);
+    syncProducts();
+    setupFilters();
+    renderProducts();
+    renderAdminProducts();
+    e.target.reset();
+    alert("Produk baru berhasil ditambahkan.");
+  });
 }
 
 setupFilters();
