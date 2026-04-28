@@ -53,7 +53,18 @@ body {
 .btn-back {
   text-decoration: none;
   color: var(--primary-dark);
-  font-weight: 700;
+  font-weight: 800;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  border-radius: 14px;
+  padding: 0.7rem 1rem;
+  box-shadow: 0 8px 20px rgba(31, 27, 45, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-back:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(92, 49, 180, 0.16);
 }
 
 .cart-layout {
