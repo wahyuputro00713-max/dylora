@@ -4,19 +4,56 @@ const filterButtons = document.querySelectorAll('.chip');
 const products = document.querySelectorAll('.product-card');
 const promoForm = document.querySelector('.promo-form');
 
-let cartCount = 0;
+const cartStorageKey = 'dyloraCart';
+
+const formatToRupiah = (value) =>
+  new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    minimumFractionDigits: 0,
+  }).format(value);
+
+const getCart = () => {
+  const stored = localStorage.getItem(cartStorageKey);
+  return stored ? JSON.parse(stored) : [];
+};
+
+const setCart = (items) => {
+  localStorage.setItem(cartStorageKey, JSON.stringify(items));
+};
+
+const updateCartCount = () => {
+  const totalQty = getCart().reduce((sum, item) => sum + item.quantity, 0);
+  cartCountEl.textContent = totalQty;
+};
+
+updateCartCount();
 
 addButtons.forEach((button) => {
   button.addEventListener('click', () => {
-    cartCount += 1;
-    cartCountEl.textContent = cartCount;
+    const product = {
+      id: button.dataset.product,
+      name: button.dataset.product,
+      price: Number(button.dataset.price),
+      oldPrice: Number(button.dataset.oldPrice),
+    };
 
-    const productName = button.dataset.product;
-    button.textContent = `✔ ${productName} ditambahkan`;
+    const cart = getCart();
+    const foundItem = cart.find((item) => item.id === product.id);
 
+    if (foundItem) {
+      foundItem.quantity += 1;
+    } else {
+      cart.push({ ...product, quantity: 1 });
+    }
+
+    setCart(cart);
+    updateCartCount();
+
+    button.textContent = `✔ ${product.name} (${formatToRupiah(product.price)})`;
     setTimeout(() => {
-      button.textContent = '+ Tambah ke Keranjang';
-    }, 1500);
+      window.location.href = 'cart.html';
+    }, 450);
   });
 });
 
