@@ -1,1 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Produk DYLORA | Koleksi Lengkap</title>
+    <meta
+      name="description"
+      content="Lihat koleksi lengkap produk DYLORA: baju wanita, piyama, dan item trending dengan desain modern."
+    />
+    <link rel="icon" type="image/png" href="Asset/DYLORA_20260426_153607_0000.png" />
+    <link rel="apple-touch-icon" href="Asset/DYLORA_20260426_153607_0000.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/products.css" />
+  </head>
+  <body>
+    <header class="product-header">
+      <nav class="navbar container">
+        <a class="brand" href="index.html">
+          <img src="Asset/DYLORA_20260426_153607_0000.png" alt="Logo DYLORA" />
+          <span>DYLORA</span>
+        </a>
+        <div class="nav-actions">
+          <a href="index.html" class="btn-ghost">← Kembali ke Home</a>
+          <a class="cart-btn" aria-label="Keranjang belanja" href="cart.html">
+            Keranjang <span id="cartCount">0</span>
+          </a>
+        </div>
+      </nav>
 
+      <section class="hero container">
+        <p class="tag">Koleksi Lengkap</p>
+        <h1>Halaman Produk DYLORA</h1>
+        <p>
+          Desain modern bergaya clean, tetap seirama dengan halaman utama untuk pengalaman belanja
+          yang konsisten.
+        </p>
+      </section>
+    </header>
+
+    <main class="container section">
+      <div class="section-head row">
+        <h2>Temukan Produk Favoritmu</h2>
+        <div class="filters" role="tablist" aria-label="Filter kategori produk">
+          <button class="chip active" data-filter="all">Semua</button>
+          <button class="chip" data-filter="fashion">Baju Wanita</button>
+          <button class="chip" data-filter="piyama">Piyama</button>
+        </div>
+      </div>
+
+      <div class="product-grid">
+        <article class="product-card" data-category="fashion">
+          <span class="badge">Best Seller</span>
+          <h3>Amora Puff Sleeve Blouse</h3>
+          <p>Bahan katun premium, potongan feminin modern.</p>
+          <div class="price-row"><strong>Rp219.000</strong><small>Rp279.000</small></div>
+          <button class="btn-add" data-product="Amora Puff Sleeve Blouse" data-price="219000" data-old-price="279000">+ Tambah ke Keranjang</button>
+        </article>
+
+        <article class="product-card" data-category="fashion">
+          <span class="badge">New</span>
+          <h3>Livia Pleated Midi Dress</h3>
+          <p>Dress flowy dengan siluet elegan, cocok untuk hangout.</p>
+          <div class="price-row"><strong>Rp329.000</strong><small>Rp399.000</small></div>
+          <button class="btn-add" data-product="Livia Pleated Midi Dress" data-price="329000" data-old-price="399000">+ Tambah ke Keranjang</button>
+        </article>
+
+        <article class="product-card" data-category="fashion">
+          <span class="badge">Hot</span>
+          <h3>Selena Knit Long Dress</h3>
+          <p>Material stretch lembut, siluet slim fit elegan untuk acara santai.</p>
+          <div class="price-row"><strong>Rp309.000</strong><small>Rp359.000</small></div>
+          <button class="btn-add" data-product="Selena Knit Long Dress" data-price="309000" data-old-price="359000">+ Tambah ke Keranjang</button>
+        </article>
+
+        <article class="product-card" data-category="piyama">
+          <span class="badge">Fav</span>
+          <h3>Celeste Satin Sleep Set</h3>
+          <p>Piyama satin super lembut dengan finishing mewah.</p>
+          <div class="price-row"><strong>Rp289.000</strong><small>Rp359.000</small></div>
+          <button class="btn-add" data-product="Celeste Satin Sleep Set" data-price="289000" data-old-price="359000">+ Tambah ke Keranjang</button>
+        </article>
+
+        <article class="product-card" data-category="piyama">
+          <span class="badge">Trending</span>
+          <h3>Cloudy Cotton Nightwear</h3>
+          <p>Bahan katun adem anti gerah untuk tidur lebih nyenyak.</p>
+          <div class="price-row"><strong>Rp249.000</strong><small>Rp319.000</small></div>
+          <button class="btn-add" data-product="Cloudy Cotton Nightwear" data-price="249000" data-old-price="319000">+ Tambah ke Keranjang</button>
+        </article>
+
+        <article class="product-card" data-category="piyama">
+          <span class="badge">New Arrival</span>
+          <h3>Noelle Bamboo Pajama Set</h3>
+          <p>Serat bamboo ringan, breathable, dan nyaman untuk nightly routine.</p>
+          <div class="price-row"><strong>Rp339.000</strong><small>Rp419.000</small></div>
+          <button class="btn-add" data-product="Noelle Bamboo Pajama Set" data-price="339000" data-old-price="419000">+ Tambah ke Keranjang</button>
+        </article>
+      </div>
+    </main>
+
+    <script src="js/products.js"></script>
+  </body>
+</html>
