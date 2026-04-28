@@ -72,6 +72,9 @@ body {
   padding: 0.65rem 1rem;
   font-weight: 700;
   cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  gap: 0.35rem;
 }
 
 .hero {
