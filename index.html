@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DYLORA | Fashion Wanita & Piyama Modern</title>
+    <meta
+      name="description"
+      content="DYLORA menghadirkan koleksi baju wanita dan piyama baju tidur dengan desain modern, nyaman, dan trend terkini."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/wahyu.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar container">
+        <div class="brand">
+          <img src="Asset/DYLORA_20260426_153607_0000.png" alt="Logo DYLORA" />
+          <span>DYLORA</span>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#koleksi">Koleksi</a></li>
+          <li><a href="#trend">Trend</a></li>
+          <li><a href="#promo">Promo</a></li>
+          <li><a href="#kontak">Kontak</a></li>
+        </ul>
+        <button class="cart-btn" id="cartBtn" aria-label="Keranjang belanja">
+          Keranjang <span id="cartCount">0</span>
+        </button>
+      </nav>
+
+      <section class="hero container">
+        <div class="hero-content">
+          <p class="tag">New Arrival 2026</p>
+          <h1>
+            Tampil <span>Elegan</span> di Siang Hari,
+            <span>Nyaman</span> Saat Waktu Istirahat
+          </h1>
+          <p>
+            Temukan koleksi baju wanita dan piyama premium dengan warna-warna soft
+            yang sedang viral. Bahan adem, potongan stylish, siap kirim seluruh Indonesia.
+          </p>
+          <div class="hero-actions">
+            <a href="#koleksi" class="btn btn-primary">Belanja Sekarang</a>
+            <a href="#trend" class="btn btn-outline">Lihat Trend</a>
+          </div>
+          <div class="hero-metrics">
+            <div><strong>12K+</strong><span>Pelanggan Happy</span></div>
+            <div><strong>4.9/5</strong><span>Rating Produk</span></div>
+            <div><strong>48 Jam</strong><span>Pengiriman Cepat</span></div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <h3>Flash Sale Hari Ini</h3>
+          <p>Diskon hingga 35% untuk koleksi pajama set satin & cotton luxe.</p>
+          <a href="#promo" class="mini-link">Klaim Promo →</a>
+        </div>
+      </section>
+    </header>
+
+    <main>
+      <section class="section container" id="trend">
+        <div class="section-head">
+          <h2>Trend Pilihan Minggu Ini</h2>
+          <p>
+            Gaya minimalis chic dan sleepwear estetik yang sedang populer di media sosial.
+          </p>
+        </div>
+        <div class="trend-grid">
+          <article class="trend-item">
+            <h3>Soft Neutrals</h3>
+            <p>Palet warna cream, dusty pink, dan mocha untuk tampilan clean girl look.</p>
+          </article>
+          <article class="trend-item">
+            <h3>Silky Pajama Set</h3>
+            <p>Piyama satin dengan detail piping modern, cocok untuk self-care night.</p>
+          </article>
+          <article class="trend-item">
+            <h3>Breathable Daily Wear</h3>
+            <p>Dress & blouse berbahan ringan untuk aktivitas harian yang tetap fashionable.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section container" id="koleksi">
+        <div class="section-head row">
+          <h2>Koleksi Produk DYLORA</h2>
+          <div class="filters" role="tablist" aria-label="Filter kategori">
+            <button class="chip active" data-filter="all">Semua</button>
+            <button class="chip" data-filter="fashion">Baju Wanita</button>
+            <button class="chip" data-filter="piyama">Piyama</button>
+          </div>
+        </div>
+
+        <div class="product-grid" id="productGrid">
+          <article class="product-card" data-category="fashion">
+            <span class="badge">Best Seller</span>
+            <h3>Amora Puff Sleeve Blouse</h3>
+            <p>Bahan katun premium, potongan feminin modern.</p>
+            <div class="price-row">
+              <strong>Rp219.000</strong><small>Rp279.000</small>
+            </div>
+            <button class="btn-add" data-product="Amora Puff Sleeve Blouse">+ Tambah ke Keranjang</button>
+          </article>
+
+          <article class="product-card" data-category="fashion">
+            <span class="badge">New</span>
+            <h3>Livia Pleated Midi Dress</h3>
+            <p>Dress flowy dengan siluet elegan, cocok untuk hangout.</p>
+            <div class="price-row">
+              <strong>Rp329.000</strong><small>Rp399.000</small>
+            </div>
+            <button class="btn-add" data-product="Livia Pleated Midi Dress">+ Tambah ke Keranjang</button>
+          </article>
+
+          <article class="product-card" data-category="piyama">
+            <span class="badge">Fav</span>
+            <h3>Celeste Satin Sleep Set</h3>
+            <p>Piyama satin super lembut dengan finishing mewah.</p>
+            <div class="price-row">
+              <strong>Rp289.000</strong><small>Rp359.000</small>
+            </div>
+            <button class="btn-add" data-product="Celeste Satin Sleep Set">+ Tambah ke Keranjang</button>
+          </article>
+
+          <article class="product-card" data-category="piyama">
+            <span class="badge">Trending</span>
+            <h3>Cloudy Cotton Nightwear</h3>
+            <p>Bahan katun adem anti gerah untuk tidur lebih nyenyak.</p>
+            <div class="price-row">
+              <strong>Rp249.000</strong><small>Rp319.000</small>
+            </div>
+            <button class="btn-add" data-product="Cloudy Cotton Nightwear">+ Tambah ke Keranjang</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="section promo" id="promo">
+        <div class="container promo-wrap">
+          <div>
+            <p class="tag">Limited Time</p>
+            <h2>Extra Voucher 15% untuk Pembelian Pertama</h2>
+            <p>Masukkan email kamu dan dapatkan kode voucher sekarang juga.</p>
+          </div>
+          <form class="promo-form">
+            <input type="email" placeholder="Masukkan email aktif" required />
+            <button type="submit">Dapatkan Voucher</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="kontak">
+      <div class="container footer-wrap">
+        <div>
+          <h3>DYLORA</h3>
+          <p>Fashion wanita dan piyama modern untuk gaya hidup aktif & nyaman.</p>
+        </div>
+        <div>
+          <h4>Kontak</h4>
+          <p>WhatsApp: +62 812-3456-7890</p>
+          <p>Email: hello@dylora.id</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/wahyu.js"></script>
+  </body>
+</html>
