@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dylora - Modern Serenity Sleepwear</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- VARIABEL WARNA (Disesuaikan dengan Logo Dylora) --- */
+        :root {
+            --primary: #89A483; /* Hijau Sage dari logo */
+            --primary-dark: #708a6a;
+            --primary-light: #e8f0e6;
+            --text-dark: #2c3e2a;
+            --text-gray: #666666;
+            --white: #ffffff;
+            --bg-body: #fafaf9;
+        }
+
+        /* --- RESET & DASAR --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--bg-body); 
+            color: var(--text-dark);
+            scroll-behavior: smooth;
+        }
+        
+        /* Font Elegan untuk Heading */
+        h1, h2, h3, .brand-text { font-family: 'Playfair Display', serif; }
+
+        /* --- NAVIGASI (HEADER) --- */
+        nav { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 1rem 5%; 
+            background: var(--white); 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+        }
+        .logo-container { display: flex; align-items: center; gap: 15px; text-decoration: none;}
+        .logo-container img { 
+            height: 55px; 
+            border-radius: 12px; /* Memberikan sentuhan modern pada kotak logo */
+            box-shadow: 0 4px 10px rgba(137, 164, 131, 0.2);
+        }
+        .brand-name {
+            display: flex;
+            flex-direction: column;
+        }
+        .brand-text { font-size: 1.4rem; color: var(--primary); font-weight: 600; letter-spacing: 2px;}
+        .brand-tag { font-family: 'Great Vibes', cursive; font-size: 1.1rem; color: var(--text-gray); margin-top: -5px;}
+        
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 500; font-size: 0.95rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+
+        /* --- HERO SECTION --- */
+        .hero { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 0 5%; 
+            background: var(--primary); 
+            color: var(--white); 
+            min-height: 85vh; 
+            gap: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-content { flex: 1; max-width: 600px; z-index: 2; }
+        .hero-content h1 { font-size: 3.5rem; margin-bottom: 1rem; line-height: 1.2; font-style: italic; }
+        .hero-content p { font-size: 1.1rem; margin-bottom: 2.5rem; font-weight: 300; line-height: 1.6; opacity: 0.9; }
+        
+        .btn-primary { 
+            display: inline-block; 
+            padding: 14px 35px; 
+            background: var(--white); 
+            color: var(--primary); 
+            text-decoration: none; 
+            border-radius: 30px; 
+            font-weight: 600; 
+            transition: all 0.3s ease; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .btn-primary:hover { background: var(--bg-body); transform: translateY(-3px); }
+
+        .hero-image { flex: 1; display: flex; justify-content: flex-end; position: relative; z-index: 2;}
+        .hero-image img { 
+            width: 100%; 
+            max-width: 450px; 
+            height: 600px;
+            object-fit: cover; 
+            border-radius: 200px 200px 20px 20px; /* Bentuk arch yang modern */
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2); 
+            border: 8px solid rgba(255,255,255,0.2);
+        }
+
+        /* Elemen Dekoratif */
+        .blob { position: absolute; background: rgba(255,255,255,0.1); border-radius: 50%; filter: blur(40px); }
+        .blob-1 { width: 300px; height: 300px; top: -100px; left: -100px; }
+        .blob-2 { width: 400px; height: 400px; bottom: -150px; right: -100px; }
+
+        /* --- PRODUCTS SECTION (Card Layout) --- */
+        .products-section { padding: 5rem 5%; text-align: center; }
+        .products-section h2 { font-size: 2.5rem; color: var(--primary); margin-bottom: 0.5rem; }
+        .products-section > p { color: var(--text-gray); margin-bottom: 3rem; }
+
+        .product-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 2.5rem; 
+        }
+
+        /* Desain Kartu Produk (Kekinian) */
+        .product-card { 
+            background: var(--white); 
+            border-radius: 16px; 
+            overflow: hidden; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04); 
+            transition: all 0.4s ease; 
+            text-align: left;
+            position: relative;
+        }
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(137, 164, 131, 0.15); }
+        
+        .img-container { position: relative; overflow: hidden; height: 380px; }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .product-card:hover .img-container img { transform: scale(1.05); }
+        
+        .badge { position: absolute; top: 15px; left: 15px; background: var(--primary); color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; }
+
+        .product-info { padding: 1.5rem; }
+        .product-info h3 { font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--text-dark); }
+        .price { color: var(--primary-dark); font-weight: 600; font-size: 1.2rem; margin-bottom: 1rem; }
+        
+        .btn-add-cart { 
+            width: 100%; 
+            padding: 12px; 
+            background: var(--primary-light); 
+            color: var(--primary-dark); 
+            border: none; 
+            border-radius: 10px; 
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer; 
+            transition: all 0.3s; 
+        }
+        .product-card:hover .btn-add-cart { background: var(--primary); color: var(--white); }
+
+        /* --- FOOTER --- */
+        footer { background: var(--primary-dark); color: var(--white); text-align: center; padding: 4rem 5% 2rem; margin-top: 4rem;}
+        footer h2 { font-size: 2rem; margin-bottom: 1rem; }
+        footer p { opacity: 0.8; font-size: 0.9rem; margin-bottom: 2rem; }
+        .copyright { border-top: 1px solid rgba(255,255,255,0.2); padding-top: 2rem; font-size: 0.85rem; opacity: 0.7; }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero { flex-direction: column; text-align: center; padding-top: 4rem; padding-bottom: 4rem;}
+            .hero-image { display: none; /* Sembunyikan gambar besar di layar HP agar rapi */ }
+            .nav-links { display: none; } /* Bisa ditambahkan hamburger menu nanti */
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo-container">
+            <img src="public/assets/DYLORA.png" alt="Dylora Logo">
+            <div class="brand-name">
+                <span class="brand-text">DYLORA</span>
+                <span class="brand-tag">Modern Serenity</span>
+            </div>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#">Beranda</a></li>
+            <li><a href="#koleksi">Koleksi</a></li>
+            <li><a href="#">Tentang Kami</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="hero-content">
+            <h1>Tidur Nyenyak dalam Balutan Elegan.</h1>
+            <p>Temukan koleksi piyama eksklusif kami. Dirancang dengan material sutra dan katun premium untuk menghadirkan kenyamanan (Serenity) dengan sentuhan gaya modern.</p>
+            <a href="#koleksi" class="btn-primary">Lihat Koleksi Terbaru</a>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1548029584-d75d3110cb1b?auto=format&fit=crop&q=80&w=600" alt="Model menggunakan Piyama">
+        </div>
+    </section>
+
+    <section id="koleksi" class="products-section">
+        <h2>Koleksi Piyama Dylora</h2>
+        <p>Sentuhan lembut untuk malam yang sempurna.</p>
+
+        <div class="product-grid">
+            
+            <div class="product-card">
+                <div class="img-container">
+                    <span class="badge">Terlaris</span>
+                    <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&q=80&w=600" alt="Piyama Set Ciel">
+                </div>
+                <div class="product-info">
+                    <h3>Olive Silk Set</h3>
+                    <div class="price">Rp 349.000</div>
+                    <button class="btn-add-cart" onclick="alert('Olive Silk Set ditambahkan ke keranjang!')">Tambah ke Keranjang</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&q=80&w=600" alt="Piyama Cotton">
+                </div>
+                <div class="product-info">
+                    <h3>Serenity Cotton Robe</h3>
+                    <div class="price">Rp 299.000</div>
+                    <button class="btn-add-cart" onclick="alert('Serenity Cotton Robe ditambahkan ke keranjang!')">Tambah ke Keranjang</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="img-container">
+                    <span class="badge">Baru</span>
+                    <img src="https://images.unsplash.com/photo-1616091093714-c64882e9ab55?auto=format&fit=crop&q=80&w=600" alt="Piyama Satin">
+                </div>
+                <div class="product-info">
+                    <h3>Midnight Emerald Pajamas</h3>
+                    <div class="price">Rp 389.000</div>
+                    <button class="btn-add-cart" onclick="alert('Midnight Emerald Pajamas ditambahkan ke keranjang!')">Tambah ke Keranjang</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <h2 style="font-family: 'Playfair Display', serif;">DYLORA</h2>
+        <p style="font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: var(--primary-light);">Modern Serenity</p>
+        <p>Hadirkan kenyamanan mewah di setiap malam Anda.</p>
+        <div class="copyright">
+            &copy; 2026 Dylora Sleepwear. All Rights Reserved.
+        </div>
+    </footer>
+
+</body>
+</html>
